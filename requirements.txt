@@ -125,7 +125,7 @@ typer==0.4.0
 types-requests==2.26.0
 types-setuptools==57.4.2
 types-toml==0.10.1
-typing-extensions==3.10.0.2
+typing-extensions==4.0.0
 urllib3==1.26.7
 wasabi==0.8.2
 wcwidth==0.2.5

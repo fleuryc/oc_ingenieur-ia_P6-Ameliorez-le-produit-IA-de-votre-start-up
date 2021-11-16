@@ -1,0 +1,10 @@
+vectorizer,r2_score,median_absolute_error
+CountVectorizer,0.142,0.495
+CountVectorizer + strip_accents + lowercase,0.142,0.495
+CountVectorizer + strip_accents + lowercase + stop_words,0.136,0.496
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df",0.096,0.517
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams",0.096,0.518
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams + PorterStemmer",0.1,0.516
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams + WordNetLemmatizer",0.097,0.52
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams + SpaCy",0.093,0.522
+"TfidfVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams + SpaCy",0.094,0.524

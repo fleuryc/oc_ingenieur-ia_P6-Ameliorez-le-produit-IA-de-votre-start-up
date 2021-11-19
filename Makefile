@@ -166,8 +166,15 @@ clean-notebook: ## Remove notebook cache and checkpoint files
 	@echo ">>> OK."
 	@echo ""
 
+.PHONY: clean-reults
+clean-dataset: ## Delete result files
+	@echo ">>> Removing result files..."
+	find ./results/ -type f -not -name ".gitignore" -delete
+	@echo ">>> OK."
+	@echo ""
+
 .PHONY: clean
-clean: clean-venv clean-mypy clean-test clean-pycache clean-dataset clean-notebook ## Remove all file artifacts
+clean: clean-venv clean-mypy clean-test clean-pycache clean-dataset clean-notebook clean-results ## Remove all file artifacts
 
 .PHONY: help
 help:

@@ -140,15 +140,8 @@ clean-pycache: ## Remove python cache files
 
 .PHONY: dataset
 dataset: ## Download and extract dataset from Kaggle
-	@echo ">>> Downloading and extracting data files..."
-	@if [ ! -f "data/raw/data.csv" ] ; \
-	then \
-		echo "Downloading data..." ; \
-		echo "Unzipping data..."; \
-		echo "Done."; \
-	else \
-		echo "Data files already downloaded."; \
-	fi
+	@echo ">>> Downloading and saving data files..."
+	python -m src.data.make-dataset -t data/raw/api/
 	@echo ">>> OK."
 	@echo ""
 
@@ -167,7 +160,7 @@ clean-notebook: ## Remove notebook cache and checkpoint files
 	@echo ""
 
 .PHONY: clean-reults
-clean-dataset: ## Delete result files
+clean-reults: ## Delete result files
 	@echo ">>> Removing result files..."
 	find ./results/ -type f -not -name ".gitignore" -delete
 	@echo ">>> OK."

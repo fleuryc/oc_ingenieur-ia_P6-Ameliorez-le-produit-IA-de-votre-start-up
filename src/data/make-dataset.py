@@ -1,4 +1,5 @@
-"""Make Dataset CLI
+"""
+Make Dataset CLI.
 
 This file defines the `make-dataset` command line.
 
@@ -30,17 +31,16 @@ import pandas as pd
 
 
 def get_yelp_data(
-    locations: list[str] = [
+    locations: tuple[str] = (
         "Paris",
         "New York City",
         "Tokyo",
         "Rio de Janeiro",
         "Sydney",
-    ],
+    ),
     category: str = "restaurants",
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """
-    Get Yelp data from API.
+    """Get Yelp data from API.
 
     - iterate over the locations
         - build a GraphQL query to get the data
@@ -275,11 +275,11 @@ def download_photos(
 
 
 def main() -> None:
-    """Download and save data and photos.
+    """
+    Download and save data and photos.
 
     Returns:
         None
-
     """
     businesses_csv_path = os.path.join(DATA_PATH, "businesses.csv")
     reviews_csv_path = os.path.join(DATA_PATH, "reviews.csv")

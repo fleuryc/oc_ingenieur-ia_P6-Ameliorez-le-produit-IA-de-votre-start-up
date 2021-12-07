@@ -40,6 +40,7 @@ def one_hot_encode_list_variables(
     columns: list[str],
 ) -> pd.DataFrame:
     """One-hot encode list variables.
+
     See : https://cmpoi.medium.com/a-quick-tutorial-to-encode-list-variables-125ba4040325
 
     - for each list variable
@@ -78,14 +79,20 @@ def one_hot_encode_list_variables(
                         for x in df[col].tolist()
                     ]
                 ).stack(),
-                prefix=col
+                prefix=col,
             )
             .groupby(level=0)
             .sum()
         )
 
         categories_df.drop(
-            columns=[col for col in categories_df.columns if col.endswith("__EMPTY__")], errors="ignore", inplace=True
+            columns=[
+                col
+                for col in categories_df.columns
+                if col.endswith("__EMPTY__")
+            ],
+            errors="ignore",
+            inplace=True,
         )  # remove empty list
 
         df = pd.concat([df, categories_df], axis=1)

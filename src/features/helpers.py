@@ -1,16 +1,17 @@
 """Helper functions, not project specific."""
 
+import json
 from typing import Union
 
 import pandas as pd
-import json
 
 
 def drop_impossible_values(
     dataframe: pd.DataFrame,
     constraints=dict[str, dict[str, Union[int, float]]],
 ) -> pd.DataFrame:
-    """Drop values from a dataframe that have impossible or unlikely values.
+    """
+    Drop values from a dataframe that have impossible or unlikely values.
 
     :param dataframe: The dataframe to be filtered.
     :param constraints: A dictionary of constraints to be applied.
@@ -28,9 +29,7 @@ def drop_impossible_values(
     for col in dataframe.columns:
         if col in constraints:
             dataframe = dataframe[
-                dataframe[col].between(
-                    constraints[col]["min"], constraints[col]["max"]
-                )
+                dataframe[col].between(constraints[col]["min"], constraints[col]["max"])
             ]
     return dataframe
 
@@ -39,9 +38,10 @@ def one_hot_encode_list_variables(
     df: pd.DataFrame,
     columns: list[str],
 ) -> pd.DataFrame:
-    """One-hot encode list variables.
+    """
+    One-hot encode list variables.
 
-    See : https://cmpoi.medium.com/a-quick-tutorial-to-encode-list-variables-125ba4040325
+    https://cmpoi.medium.com/a-quick-tutorial-to-encode-list-variables-125ba4040325
 
     - for each list variable
         - decode JSON values to list
@@ -61,9 +61,7 @@ def one_hot_encode_list_variables(
     df = df.copy()
     for col in columns:
         if not isinstance(df[col][0], list):
-            df[col] = df[col].replace(
-                "[]", "null"
-            )  # replace empty list with null
+            df[col] = df[col].replace("[]", "null")  # replace empty list with null
             df[col] = df[col].apply(json.loads)  # convert string to list
 
         if not isinstance(df[col][0], list):
@@ -86,11 +84,7 @@ def one_hot_encode_list_variables(
         )
 
         categories_df.drop(
-            columns=[
-                col
-                for col in categories_df.columns
-                if col.endswith("__EMPTY__")
-            ],
+            columns=[col for col in categories_df.columns if col.endswith("__EMPTY__")],
             errors="ignore",
             inplace=True,
         )  # remove empty list

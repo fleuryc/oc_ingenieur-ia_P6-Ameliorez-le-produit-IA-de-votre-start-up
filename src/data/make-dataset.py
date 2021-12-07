@@ -12,32 +12,25 @@ optional arguments:
   -t TEXT, --text TEXT  Input text of which we want to detect the language.
 """
 
+import argparse
+import json
+import logging
+
+# System modules
+import os
+from hashlib import md5
+
+# ML modules
+import pandas as pd
+import requests
+from dotenv import load_dotenv
+
 # Import custom helper libraries
 import src.data.helpers as data_helpers
 
 
-# System modules
-import os
-import logging
-import argparse
-from dotenv import load_dotenv
-import requests
-from hashlib import md5
-import json
-
-
-# ML modules
-import pandas as pd
-
-
 def get_yelp_data(
-    locations: tuple[str] = (
-        "Paris",
-        "New York City",
-        "Tokyo",
-        "Rio de Janeiro",
-        "Sydney",
-    ),
+    locations: list[str],
     category: str = "restaurants",
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Get Yelp data from API.
@@ -51,28 +44,32 @@ def get_yelp_data(
 
     Params:
         locations: str[] (default: ["Paris"]) - List of Yelp locations to search
-        category: str (default: "restaurants") - Yelp category (see https://www.yelp.com/developers/documentation/v3/all_category_list)
+        category: str (default: "restaurants") - Yelp category (see
+            https://www.yelp.com/developers/documentation/v3/all_category_list)
 
     Returns:
         businesses: pd.DataFrame - businesses data from Yelp API request
         reviews: pd.DataFrame - reviews data from Yelp API request
         photos: pd.DataFrame - photos data from Yelp API request
     """
-    # businesses data (see https://www.yelp.com/developers/graphql/objects/business)
+    # businesses data (see
+    #   https://www.yelp.com/developers/graphql/objects/business)
     businesses = pd.DataFrame(
         columns=[
             "business_alias",  # Unique Yelp alias of this business.
-            "business_review_count",  # Total number of reviews for this business.
-            "business_rating",  # Rating of the business, which is an average of the ratings of all reviews.
-            "business_price",  # Price range of the business, from "$" to "$$$$" (inclusive).
-            "business_city",  # City of this business.
-            "business_state",  # ISO 3166-2 (with a few exceptions) state code of this business (see https://www.yelp.com/developers/documentation/v3/state_codes).
-            "business_postal_code",  # Postal code of this business (see https://en.wikipedia.org/wiki/Postal_code)
-            "business_country",  # ISO 3166-1 alpha-2 country code of this business.
-            "business_latitude",  # Latitude of the business.
-            "business_longitude",  # Longitude of the business.
-            "business_categories",  # List of categories the business belongs to.
-            "business_parent_categories",  # List of parent categories the business belongs to.
+            "business_review_count",  # Total number of reviews
+            "business_rating",  # Average of the ratings of all reviews
+            "business_price",  # Price range, from "$" to "$$$$" (inclusive)
+            "business_city",  # City of this business
+            "business_state",  # ISO 3166-2 (with a few exceptions) state code
+            # (see https://www.yelp.com/developers/documentation/v3/state_codes)
+            "business_postal_code",  # Postal code
+            # (see https://en.wikipedia.org/wiki/Postal_code)
+            "business_country",  # ISO 3166-1 alpha-2 country code
+            "business_latitude",  # Latitude
+            "business_longitude",  # Longitude
+            "business_categories",  # List of categories
+            "business_parent_categories",  # List of parent categories
         ]
     )
     reviews = pd.DataFrame(
@@ -103,7 +100,12 @@ def get_yelp_data(
         for offset in range(0, count, limit):
             # Build the GraphQL query
             query = f'{{\n\
-        search(categories: "{ category }", location: "{ location }", offset: { offset }, limit:  { limit }) {{\n\
+        search(\
+            categories: "{ category }", \
+            location: "{ location }", \
+            offset: { offset }, \
+            limit:  { limit }\
+        ) {{\n\
             business {{\n\
                 alias\n\
                 review_count\n\
@@ -138,7 +140,9 @@ def get_yelp_data(
             # Parse the response
             if not response.status_code == 200:
                 raise Exception(
-                    f"Yelp API request failed with status code { response.status_code }. Response text: { response.text }"
+                    "Yelp API request failed with status code "
+                    + str(response.status_code)
+                    + f" . Response text: { response.text }"
                 )
 
             # Parse the response
@@ -149,46 +153,36 @@ def get_yelp_data(
                     f"Yelp API request failed with errors: { data['errors'] }"
                 )
 
-            for business in (
-                data.get("data", {}).get("search", {}).get("business", [])
-            ):
+            for business in data.get("data", {}).get("search", {}).get("business", []):
                 # Add the business data to the dataframe
                 businesses = businesses.append(
                     {
                         "business_alias": business.get("alias"),
                         "business_review_count": business.get("review_count"),
                         "business_rating": business.get("rating"),
-                        "business_price": len(  # count the number of characters ($, €, ...)
+                        "business_price": len(  # count the number of characters
                             business.get("price")
                         )
                         if business.get("price") is not None
                         else 0,
-                        "business_city": business.get("location", {}).get(
-                            "city"
+                        "business_city": business.get("location", {}).get("city"),
+                        "business_state": business.get("location", {}).get("state"),
+                        "business_postal_code": business.get("location", {}).get(
+                            "postal_code"
                         ),
-                        "business_state": business.get("location", {}).get(
-                            "state"
+                        "business_country": business.get("location", {}).get("country"),
+                        "business_latitude": business.get("coordinates", {}).get(
+                            "latitude"
                         ),
-                        "business_postal_code": business.get(
-                            "location", {}
-                        ).get("postal_code"),
-                        "business_country": business.get("location", {}).get(
-                            "country"
+                        "business_longitude": business.get("coordinates", {}).get(
+                            "longitude"
                         ),
-                        "business_latitude": business.get(
-                            "coordinates", {}
-                        ).get("latitude"),
-                        "business_longitude": business.get(
-                            "coordinates", {}
-                        ).get("longitude"),
                         "business_categories": json.dumps(
                             list(
                                 set(  # keep unique values
                                     [
                                         cat.get("alias")
-                                        for cat in business.get(
-                                            "categories", []
-                                        )
+                                        for cat in business.get("categories", [])
                                     ]
                                 )
                             )
@@ -198,9 +192,7 @@ def get_yelp_data(
                                 set(  # keep unique values
                                     [
                                         parent_cat.get("alias")
-                                        for cat in business.get(
-                                            "categories", []
-                                        )
+                                        for cat in business.get("categories", [])
                                         for parent_cat in cat.get(
                                             "parent_categories", []
                                         )
@@ -218,7 +210,10 @@ def get_yelp_data(
                         {
                             "business_alias": business.get("alias"),
                             "photo_url": photo,
-                            "file_name": f"{ business.get('alias') }_{ md5(photo.encode('utf-8')).hexdigest() }.jpg",
+                            "file_name": business.get("alias")
+                            + "_"
+                            + md5(photo.encode("utf-8")).hexdigest()  # nosec: B303
+                            + ".jpg",
                         },
                         ignore_index=True,
                     )
@@ -264,7 +259,10 @@ def download_photos(
             request = requests.get(photo.photo_url)
             if not 200 == request.status_code:
                 logging.warning(
-                    f"Photo URL : { photo.photo_url }\nYelp API request failed with status code: { request.status_code }.\nResponse text: { request.text }"
+                    f"Photo URL : { photo.photo_url }\n"
+                    + "Yelp API request failed with status code: "
+                    + f"{ request.status_code }.\n"
+                    + f"Response text: { request.text }"
                 )
                 continue
 
@@ -299,41 +297,40 @@ def main() -> None:
         os.makedirs(DATA_PATH)
 
     logger.info("Downloading data")
-    businesses_df, reviews_df, photos_df = get_yelp_data()
+    businesses_df, reviews_df, photos_df = get_yelp_data(
+        locations=[
+            "Paris",
+            "New York City",
+            "Tokyo",
+            "Rio de Janeiro",
+            "Sydney",
+        ],
+        category="restaurants",
+    )
     logger.info("Data downloaded")
 
     # Fix dtypes
-    businesses_df["business_alias"] = businesses_df["business_alias"].astype(
-        str
-    )
+    businesses_df["business_alias"] = businesses_df["business_alias"].astype(str)
     businesses_df["business_review_count"] = businesses_df[
         "business_review_count"
     ].astype(int)
-    businesses_df["business_rating"] = businesses_df["business_rating"].astype(
-        float
-    )
-    businesses_df["business_price"] = businesses_df["business_price"].astype(
-        int
-    )
+    businesses_df["business_rating"] = businesses_df["business_rating"].astype(float)
+    businesses_df["business_price"] = businesses_df["business_price"].astype(int)
     businesses_df["business_city"] = businesses_df["business_city"].astype(str)
-    businesses_df["business_state"] = businesses_df["business_state"].astype(
-        str
-    )
+    businesses_df["business_state"] = businesses_df["business_state"].astype(str)
     businesses_df["business_postal_code"] = businesses_df[
         "business_postal_code"
     ].astype(str)
-    businesses_df["business_country"] = businesses_df[
-        "business_country"
-    ].astype(str)
-    businesses_df["business_latitude"] = businesses_df[
-        "business_latitude"
-    ].astype(float)
-    businesses_df["business_longitude"] = businesses_df[
-        "business_longitude"
-    ].astype(float)
-    businesses_df["business_categories"] = businesses_df[
-        "business_categories"
-    ].astype(str)
+    businesses_df["business_country"] = businesses_df["business_country"].astype(str)
+    businesses_df["business_latitude"] = businesses_df["business_latitude"].astype(
+        float
+    )
+    businesses_df["business_longitude"] = businesses_df["business_longitude"].astype(
+        float
+    )
+    businesses_df["business_categories"] = businesses_df["business_categories"].astype(
+        str
+    )
     businesses_df["business_parent_categories"] = businesses_df[
         "business_parent_categories"
     ].astype(str)

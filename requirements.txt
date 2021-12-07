@@ -4,7 +4,7 @@ attrs==21.2.0
 Babel==2.9.1
 backcall==0.2.0
 bandit==1.7.0
-black==21.10b0
+black==21.12b0
 bleach==4.1.0
 blis==0.7.5
 catalogue==2.0.6

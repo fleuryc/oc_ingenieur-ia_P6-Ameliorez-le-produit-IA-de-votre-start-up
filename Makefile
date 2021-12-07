@@ -55,7 +55,7 @@ requirements-dev.txt: check-system check-venv ## Create requirements-dev.txt fil
 	pip install --upgrade pip
 	pip install --upgrade isort black "black[jupyter]" flake8 bandit mypy \
 		pytest pytest-cov
-	pip freeze | grep -v "pkg-resources" > requirements-dev.txt
+	pip freeze | grep -v "pkg_resources" > requirements-dev.txt
 	@echo ">>> OK."
 	@echo ""
 
@@ -66,7 +66,7 @@ requirements.txt: check-system check-venv ## Create requirements.txt file
 		graphviz python-dotenv requests matplotlib seaborn plotly numpy \
 		statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow \
 		scikit-image opencv-python tensorflow
-	pip freeze | grep -v "pkg-resources" > requirements.txt
+	pip freeze | grep -v "pkg_resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""
 

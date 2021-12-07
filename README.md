@@ -36,6 +36,8 @@ You can see the results here :
 ### Virtual environment
 
 ```bash
+# python -m venv env
+# > or just :
 make venv
 source env/bin/activate
 ```
@@ -46,7 +48,7 @@ source env/bin/activate
 # pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension graphviz python-dotenv requests matplotlib seaborn plotly numpy statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow scikit-image opencv-python tensorflow
 # > or :
 # pip install -r requirements.txt
-# > or :
+# > or just :
 make install
 ```
 

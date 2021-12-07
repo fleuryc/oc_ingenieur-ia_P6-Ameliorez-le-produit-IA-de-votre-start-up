@@ -50,37 +50,35 @@ check-venv: ## Check that virtual environment is active
 	@echo ">>> OK."
 	@echo ""
 
-.PHONY: requirements-dev
-requirements-dev: check-system check-venv ## Create requirements.txt file
+requirements-dev.txt: check-system check-venv ## Create requirements-dev.txt file
 	@echo ">>> Creating 'requirements-dev.txt' file..."
 	pip install --upgrade pip
 	pip install --upgrade isort black "black[jupyter]" flake8 bandit mypy \
 		pytest pytest-cov
-	pip freeze > requirements-dev.txt
+	pip freeze | grep -v "pkg-resources" > requirements-dev.txt
 	@echo ">>> OK."
 	@echo ""
 
-.PHONY: requirements
-requirements: check-system check-venv ## Create requirements.txt file
+requirements.txt: check-system check-venv ## Create requirements.txt file
 	@echo ">>> Creating 'requirements.txt' file..."
 	pip install --upgrade pip
 	pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension \
 		graphviz python-dotenv requests matplotlib seaborn plotly numpy \
 		statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow \
 		scikit-image opencv-python tensorflow
-	pip freeze > requirements.txt
+	pip freeze | grep -v "pkg-resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""
 
 .PHONY: deps-dev
-deps-dev: requirements-dev.txt check-system check-venv ## Install dependencies with pip
+deps-dev: check-system check-venv requirements-dev.txt ## Install dependencies with pip
 	@echo ">>> Installing dev dependancies from 'requirements-dev.txt' file..."
 	pip install -r requirements-dev.txt
 	@echo ">>> OK."
 	@echo ""
 
 .PHONY: deps
-deps: requirements.txt check-system check-venv ## Install dependencies with pip
+deps: check-system check-venv requirements.txt ## Install dependencies with pip
 	@echo ">>> Installing dependancies from 'requirements.txt' file..."
 	pip install -r requirements.txt
 	@echo ">>> OK."

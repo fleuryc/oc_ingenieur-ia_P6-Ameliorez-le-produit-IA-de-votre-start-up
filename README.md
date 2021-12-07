@@ -43,7 +43,7 @@ source env/bin/activate
 ### Dependencies
 
 ```bash
-# pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension python-dotenv requests matplotlib pandas sklearn nltk spacy lightgbm shap graphviz plotly
+# pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension graphviz python-dotenv requests matplotlib seaborn plotly numpy statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow scikit-image opencv-python tensorflow
 # > or :
 # pip install -r requirements.txt
 # > or :

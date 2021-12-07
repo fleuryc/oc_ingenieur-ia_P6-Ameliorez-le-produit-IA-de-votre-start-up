@@ -50,10 +50,32 @@ check-venv: ## Check that virtual environment is active
 	@echo ">>> OK."
 	@echo ""
 
-.PHONY: freeze
-freeze: check-system check-venv ## Create requirements.txt file
+.PHONY: requirements-dev
+requirements-dev: check-system check-venv ## Create requirements.txt file
+	@echo ">>> Creating 'requirements-dev.txt' file..."
+	pip install --upgrade pip
+	pip install --upgrade isort black "black[jupyter]" flake8 bandit mypy \
+		pytest pytest-cov
+	pip freeze > requirements-dev.txt
+	@echo ">>> OK."
+	@echo ""
+
+.PHONY: requirements
+requirements: check-system check-venv ## Create requirements.txt file
 	@echo ">>> Creating 'requirements.txt' file..."
+	pip install --upgrade pip
+	pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension \
+		graphviz python-dotenv requests matplotlib seaborn plotly numpy \
+		statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow \
+		scikit-image opencv-python tensorflow
 	pip freeze > requirements.txt
+	@echo ">>> OK."
+	@echo ""
+
+.PHONY: deps-dev
+deps-dev: requirements-dev.txt check-system check-venv ## Install dependencies with pip
+	@echo ">>> Installing dev dependancies from 'requirements-dev.txt' file..."
+	pip install -r requirements-dev.txt
 	@echo ">>> OK."
 	@echo ""
 
@@ -70,7 +92,7 @@ deps: requirements.txt check-system check-venv ## Install dependencies with pip
 	@echo ""
 
 .PHONY: install
-install: check-system check-venv deps ## Check system and venv, and install dependencies
+install: check-system check-venv deps-dev deps ## Check system and venv, and install dependencies
 
 .PHONY: isort
 isort: ## Sort imports with Isort

@@ -30,4 +30,4 @@ stevedore==3.5.0
 toml==0.10.2
 tomli==1.2.2
 types-requests==2.26.1
-typing-extensions==3.10.0.2
+typing-extensions==4.0.1

@@ -61,6 +61,7 @@ jupyter-lab notebooks/main.ipynb
 ### Quality Assurance
 
 ```bash
+# pip install --upgrade isort black "black[jupyter]" flake8 bandit mypy  pytest pytest-cov
 # make isort
 # make format
 # make lint

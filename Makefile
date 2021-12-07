@@ -82,7 +82,7 @@ isort: ## Sort imports with Isort
 .PHONY: format
 format: ## Format with Black
 	@echo ">>> Formatting code..."
-	black src/ tests/
+	black notebooks/ src/ tests/
 	@echo ">>> OK."
 	@echo ""
 

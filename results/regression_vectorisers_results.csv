@@ -1,21 +1,21 @@
 vectorizer,vocabulary_size,r2_score,median_absolute_error
-CountVectorizer + strip_accents + lowercase,5523,0.14195764461163796,0.49465796548011776
-CountVectorizer,5541,0.1419576436234431,0.4946580549553432
-TfidfVectorizer,5541,0.13789302829744576,0.4950509790121025
-TfidfVectorizer + strip_accents + lowercase,5523,0.13777448303888007,0.495200769699641
-CountVectorizer + strip_accents + lowercase + stop_words,5389,0.13575038509810966,0.4964154371671774
-TfidfVectorizer + strip_accents + lowercase + stop_words,5389,0.13303162583982908,0.5084621340955191
-"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + None",546,0.1085238719700573,0.5095438922429851
-"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + None",546,0.10702637585757269,0.5198748814290943
-"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + PorterStemmer",294,0.10040397140293089,0.5158923824853954
-"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + stop_words",283,0.09841714380620936,0.5154613059841684
-"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + PorterStemmer",294,0.09792517452104177,0.5101481150689464
-"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + WordNetLemmatizer",286,0.09688262833742434,0.5195638502760351
-"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + stop_words",283,0.096468042327427,0.5053875307158666
-"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams",291,0.09643821493304039,0.5182274151281985
-"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df",283,0.09603110328777908,0.5172143291760207
-"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + SpaCy",248,0.09432268938681532,0.5236057709736337
-"TfidfVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams",291,0.09395684295447071,0.5088128011243165
-"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + WordNetLemmatizer",286,0.09354196303815288,0.5195593322209398
-"TfidfVectorizer + strip_accents + lowercase + stop_words + {min,max}_df",283,0.09333307305142657,0.5102483859405815
-"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + SpaCy",248,0.09302785371220523,0.5219966406851082
+TfidfVectorizer,5541,0.10181751244742199,0.4809068652288404
+TfidfVectorizer + strip_accents + lowercase,5523,0.10180472763722093,0.4810105978588489
+CountVectorizer,5541,0.10154318167296061,0.4905244012753148
+CountVectorizer + strip_accents + lowercase,5523,0.1015431761920228,0.49052448840663804
+TfidfVectorizer + strip_accents + lowercase + stop_words,5389,0.09398756067013203,0.4919201706466061
+CountVectorizer + strip_accents + lowercase + stop_words,5389,0.091644696008232,0.47897700647671854
+"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + None",546,0.08409012383976666,0.4771328072951546
+"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + None",546,0.08245539873081864,0.48017005372100063
+"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + PorterStemmer",294,0.07586972036996309,0.4831655344527842
+"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + PorterStemmer",294,0.07472664514754812,0.4771505935788769
+"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + SpaCy",248,0.07249373051815633,0.49061519099766215
+"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + WordNetLemmatizer",286,0.072170757068177,0.48828815276984516
+"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + WordNetLemmatizer",286,0.06970388360540014,0.4826059224581719
+"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + SpaCy",248,0.06954493290744745,0.4938152774868939
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df",283,0.0691129448832124,0.4903355622315919
+"CountVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams",291,0.0691129448832124,0.4903355622315919
+"CountVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + stopwords",283,0.0686112598237012,0.48607987423725685
+"TfidfVectorizer + strip_accents + lowercase + {min,max}_df + ngrams + stopwords",283,0.06744908960220253,0.4873226329884939
+"TfidfVectorizer + strip_accents + lowercase + stop_words + {min,max}_df + ngrams",291,0.06626895478190808,0.49689303527827455
+"TfidfVectorizer + strip_accents + lowercase + stop_words + {min,max}_df",283,0.06612074280276281,0.4954155827572998

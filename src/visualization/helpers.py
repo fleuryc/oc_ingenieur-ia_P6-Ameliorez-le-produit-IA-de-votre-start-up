@@ -289,11 +289,12 @@ def plot_pca_2d(
     data: pd.DataFrame,
     categories: pd.DataFrame,
 ) -> None:
-    """Draw a 2D PCA plot of the data and the feture importances.
+    """
+    Draw a 2D PCA plot of the data and the feture importances.
 
-    Arguments :
-    - data : Pandas DataFrame containing the data
-    - categories : Pandas DataFrame containing the categories
+    Args:
+        data (pd.DataFrame) : Pandas DataFrame containing the data
+        categories (pd.DataFrame) : Pandas DataFrame containing the categories
 
     Returns : None
     """

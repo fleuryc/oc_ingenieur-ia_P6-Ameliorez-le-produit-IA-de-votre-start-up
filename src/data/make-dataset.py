@@ -33,7 +33,8 @@ def get_yelp_data(
     locations: list[str],
     category: str = "restaurants",
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Get Yelp data from API.
+    """
+    Get Yelp data from API.
 
     - iterate over the locations
         - build a GraphQL query to get the data
@@ -237,7 +238,8 @@ def download_photos(
     photos: pd.DataFrame,
     target_path: str,
 ) -> None:
-    """Download photos from the Yelp API and save them to the target path.
+    """
+    Download photos from the Yelp API and save them to the target path.
 
     Params:
         photos (pd.DataFrame): Dataframe containing the photos to download.

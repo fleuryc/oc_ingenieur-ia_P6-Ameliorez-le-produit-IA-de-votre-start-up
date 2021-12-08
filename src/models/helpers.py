@@ -109,7 +109,8 @@ def automl_classifier(
     y_test: pd.Series,
     estimator: ClassifierMixin,
 ) -> dict[str, Any]:
-    """Runs AutoML to find the best estimator.
+    """
+    Runs AutoML to find the best estimator.
 
     Args:
         X_train (pd.DataFrame): training data

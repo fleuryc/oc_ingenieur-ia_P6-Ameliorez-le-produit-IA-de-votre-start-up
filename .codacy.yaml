@@ -1,0 +1,16 @@
+---
+exclude_paths:
+  - ".github/**"
+  - ".vscode/**"
+
+engines:
+  - markdownlint:
+      - MD007: # https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md
+          - indent: 4
+      - MD030: # https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md
+          - ul_single: 3
+          - ul_multi: 3
+      - MD043: false # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md043---required-heading-structure
+  - prospector:
+      - ignore:
+        - D213 # https://stackoverflow.com/a/45990465/1415232

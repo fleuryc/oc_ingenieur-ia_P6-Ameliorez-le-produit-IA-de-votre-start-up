@@ -8,6 +8,9 @@ engines:
       ul_multi: 3
     MD043: false # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md043---required-heading-structure
   prospector:
+    pydocstyle:
+      disable:
+        - D213 # https://stackoverflow.com/a/45990465/1415232
     pep257:
       disable:
         - D213 # https://stackoverflow.com/a/45990465/1415232

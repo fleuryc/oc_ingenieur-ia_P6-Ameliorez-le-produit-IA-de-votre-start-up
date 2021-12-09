@@ -15,7 +15,8 @@ def download_extract_zip(
     files_names: tuple[str],
     target_path: str,
 ) -> None:
-    """Download Zip from url and extract content files to local path.
+    """
+    Download Zip from url and extract content files to local path.
 
     - Check if content files already exist.
         - If they all exist, return.

@@ -65,7 +65,9 @@ requirements.txt: check-system check-venv ## Create requirements.txt file
 	pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension \
 		graphviz python-dotenv requests matplotlib seaborn plotly numpy \
 		statsmodels pandas sklearn lightgbm nltk spacy gensim pyldavis Pillow \
-		scikit-image opencv-python tensorflow
+		scikit-image opencv-python tensorflow transformers shap
+	pip3 install torch==1.10.0+cpu torchvision==0.11.1+cpu torchaudio==0.10.0+cpu \
+		-f https://download.pytorch.org/whl/cpu/torch_stable.html
 	pip freeze | grep -v "pkg_resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""

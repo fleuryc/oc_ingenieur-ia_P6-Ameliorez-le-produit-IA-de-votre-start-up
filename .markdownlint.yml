@@ -1,6 +1,3 @@
-# Default state for all rules
-default: true
-
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md
 # MD007/ul-indent - Unordered list indentation
 MD007:

@@ -100,39 +100,19 @@ def reduce_dataframe_memory_usage(
             # "int" dtype
             c_min = df[col].min()
             c_max = df[col].max()
-            if (
-                c_min > np.iinfo(np.uint8).min
-                and c_max < np.iinfo(np.uint8).max
-            ):
+            if c_min > np.iinfo(np.uint8).min and c_max < np.iinfo(np.uint8).max:
                 df[col] = df[col].astype("UInt8")
-            elif (
-                c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max
-            ):
+            elif c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max:
                 df[col] = df[col].astype("Int8")
-            elif (
-                c_min > np.iinfo(np.uint16).min
-                and c_max < np.iinfo(np.uint16).max
-            ):
+            elif c_min > np.iinfo(np.uint16).min and c_max < np.iinfo(np.uint16).max:
                 df[col] = df[col].astype("UInt16")
-            elif (
-                c_min > np.iinfo(np.int16).min
-                and c_max < np.iinfo(np.int16).max
-            ):
+            elif c_min > np.iinfo(np.int16).min and c_max < np.iinfo(np.int16).max:
                 df[col] = df[col].astype("Int16")
-            elif (
-                c_min > np.iinfo(np.uint32).min
-                and c_max < np.iinfo(np.uint32).max
-            ):
+            elif c_min > np.iinfo(np.uint32).min and c_max < np.iinfo(np.uint32).max:
                 df[col] = df[col].astype("UInt32")
-            elif (
-                c_min > np.iinfo(np.int32).min
-                and c_max < np.iinfo(np.int32).max
-            ):
+            elif c_min > np.iinfo(np.int32).min and c_max < np.iinfo(np.int32).max:
                 df[col] = df[col].astype("Int32")
-            elif (
-                c_min > np.iinfo(np.uint64).min
-                and c_max < np.iinfo(np.uint64).max
-            ):
+            elif c_min > np.iinfo(np.uint64).min and c_max < np.iinfo(np.uint64).max:
                 df[col] = df[col].astype("UInt64")
             else:
                 df[col] = df[col].astype("Int64")

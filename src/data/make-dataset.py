@@ -189,15 +189,11 @@ def get_yelp_data(
                         ),
                         "business_parent_categories": json.dumps(
                             list(
-                                set(  # keep unique values
-                                    [
-                                        parent_cat.get("alias")
-                                        for cat in business.get("categories", [])
-                                        for parent_cat in cat.get(
-                                            "parent_categories", []
-                                        )
-                                    ]
-                                )
+                                {  # convert to a set to remove duplicates
+                                    parent_cat.get("alias")
+                                    for cat in business.get("categories", [])
+                                    for parent_cat in cat.get("parent_categories", [])
+                                }
                             )
                         ),
                     },

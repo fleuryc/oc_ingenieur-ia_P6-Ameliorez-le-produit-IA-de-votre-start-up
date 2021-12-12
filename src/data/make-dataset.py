@@ -18,6 +18,7 @@ import logging
 
 # System modules
 import os
+import sys
 from hashlib import md5
 
 # ML modules
@@ -180,12 +181,10 @@ def get_yelp_data(
                         ),
                         "business_categories": json.dumps(
                             list(
-                                set(  # keep unique values
-                                    [
-                                        cat.get("alias")
-                                        for cat in business.get("categories", [])
-                                    ]
-                                )
+                                {  # convert to a set to remove duplicates
+                                    cat.get("alias")
+                                    for cat in business.get("categories", [])
+                                }
                             )
                         ),
                         "business_parent_categories": json.dumps(
@@ -259,7 +258,7 @@ def download_photos(
         if not os.path.exists(file_path):
             # Download the photo
             request = requests.get(photo.photo_url)
-            if not 200 == request.status_code:
+            if not request.status_code == 200:
                 logging.warning(
                     f"Photo URL : { photo.photo_url }\n"
                     + "Yelp API request failed with status code: "
@@ -292,7 +291,7 @@ def main() -> None:
     ):
         logging.info("Data already downloaded")
         # Early exit if data already downloaded
-        exit(0)
+        sys.exit(0)
 
     if not os.path.exists(DATA_PATH):
         logging.info("Creating %s", DATA_PATH)

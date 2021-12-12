@@ -134,7 +134,7 @@ def reduce_dataframe_memory_usage(
     logging.info("Memory usage after optimization is %d MB", end_mem)
     if start_mem > 0:
         logging.info(
-            "Decreased by %d %", round(100 * (start_mem - end_mem) / start_mem)
+            "Decreased by %d %%", round(100 * (start_mem - end_mem) / start_mem)
         )
 
     return df

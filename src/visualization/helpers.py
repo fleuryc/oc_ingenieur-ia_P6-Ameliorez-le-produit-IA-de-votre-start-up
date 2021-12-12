@@ -222,7 +222,6 @@ def plot_classifier_results(
         y_test (pd.Series): true values
     """
     if not is_classifier(classifier):
-        logging.error(f"{classifier} is not a classifier.")
         raise ValueError(f"{classifier} is not a classifier.")
 
     _, ax = plt.subplots(

@@ -1,5 +1,4 @@
 """Helper functions, not project specific."""
-import logging
 import warnings
 from time import time
 from typing import Any, Union
@@ -49,7 +48,6 @@ def find_best_params_classifier(
         dict[str, Any]: Classifier optimization results.
     """
     if not is_classifier(estimator):
-        logging.error(f"{estimator} is not a classifier.")
         raise ValueError(f"{estimator} is not a classifier.")
 
     clf = HalvingRandomSearchCV(
@@ -126,7 +124,6 @@ def automl_classifier(
         dict[str, Any]: Classifier optimization results.
     """
     if not is_classifier(estimator):
-        logging.error(f"{estimator} is not a classifier.")
         raise ValueError(f"{estimator} is not a classifier.")
 
     clf = estimator.fit(X_train, y_train)

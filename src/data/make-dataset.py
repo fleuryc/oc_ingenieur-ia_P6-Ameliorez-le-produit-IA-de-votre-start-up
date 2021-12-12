@@ -250,7 +250,7 @@ def download_photos(
     """
     # Check if content path exists
     if not os.path.exists(target_path):
-        logging.info(f"Creating {target_path}")
+        logging.info("Creating %s", target_path)
         os.makedirs(target_path)
 
     for photo in photos.itertuples(index=False):
@@ -295,7 +295,7 @@ def main() -> None:
         exit(0)
 
     if not os.path.exists(DATA_PATH):
-        logging.info(f"Creating {DATA_PATH}")
+        logging.info("Creating %s", DATA_PATH)
         os.makedirs(DATA_PATH)
 
     logger.info("Downloading data")

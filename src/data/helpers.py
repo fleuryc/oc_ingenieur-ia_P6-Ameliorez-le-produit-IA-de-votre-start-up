@@ -43,30 +43,28 @@ def download_extract_zip(
 
     # If all files already exist, return
     if not must_download:
-        logging.info(f"All files already exist in {target_path}")
+        logging.info("All files already exist in %s", target_path)
         return
 
     # Download zip file
     r = requests.get(zip_file_url)
     if r.status_code != 200:
-        logging.error(f"Error downloading {zip_file_url}")
         raise ValueError(f"Failed to download {zip_file_url}")
 
     # Check if zip file is OK
     z = zipfile.ZipFile(io.BytesIO(r.content))
     if z.testzip() is not None:
-        logging.error(f"Error extracting {zip_file_url}")
         raise ValueError(f"Failed to extract {zip_file_url}")
 
     # Check if content path exists
     if not os.path.exists(target_path):
-        logging.info(f"Creating {target_path}")
+        logging.info("Creating %s", target_path)
         os.makedirs(target_path)
 
     # Extract files from zip
-    logging.info(f"Extracting {zip_file_url} to {target_path}")
+    logging.info("Extracting %s to %s", zip_file_url, target_path)
     z.extractall(target_path)
-    logging.info(f"Extracted {zip_file_url} to {target_path}")
+    logging.info("Extracted %s to %s", zip_file_url, target_path)
 
 
 def reduce_dataframe_memory_usage(
@@ -85,7 +83,7 @@ def reduce_dataframe_memory_usage(
         pd.DataFrame: dataframe with reduced memory usage.
     """
     start_mem = round(df.memory_usage().sum() / 1024 ** 2, 2)
-    logging.info(f"Memory usage of dataframe is {start_mem} MB")
+    logging.info("Memory usage of dataframe is %d MB", start_mem)
 
     # Iterate through columns
     for col in df.columns:
@@ -102,19 +100,39 @@ def reduce_dataframe_memory_usage(
             # "int" dtype
             c_min = df[col].min()
             c_max = df[col].max()
-            if c_min > np.iinfo(np.uint8).min and c_max < np.iinfo(np.uint8).max:
+            if (
+                c_min > np.iinfo(np.uint8).min
+                and c_max < np.iinfo(np.uint8).max
+            ):
                 df[col] = df[col].astype("UInt8")
-            elif c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max:
+            elif (
+                c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max
+            ):
                 df[col] = df[col].astype("Int8")
-            elif c_min > np.iinfo(np.uint16).min and c_max < np.iinfo(np.uint16).max:
+            elif (
+                c_min > np.iinfo(np.uint16).min
+                and c_max < np.iinfo(np.uint16).max
+            ):
                 df[col] = df[col].astype("UInt16")
-            elif c_min > np.iinfo(np.int16).min and c_max < np.iinfo(np.int16).max:
+            elif (
+                c_min > np.iinfo(np.int16).min
+                and c_max < np.iinfo(np.int16).max
+            ):
                 df[col] = df[col].astype("Int16")
-            elif c_min > np.iinfo(np.uint32).min and c_max < np.iinfo(np.uint32).max:
+            elif (
+                c_min > np.iinfo(np.uint32).min
+                and c_max < np.iinfo(np.uint32).max
+            ):
                 df[col] = df[col].astype("UInt32")
-            elif c_min > np.iinfo(np.int32).min and c_max < np.iinfo(np.int32).max:
+            elif (
+                c_min > np.iinfo(np.int32).min
+                and c_max < np.iinfo(np.int32).max
+            ):
                 df[col] = df[col].astype("Int32")
-            elif c_min > np.iinfo(np.uint64).min and c_max < np.iinfo(np.uint64).max:
+            elif (
+                c_min > np.iinfo(np.uint64).min
+                and c_max < np.iinfo(np.uint64).max
+            ):
                 df[col] = df[col].astype("UInt64")
             else:
                 df[col] = df[col].astype("Int64")
@@ -133,8 +151,10 @@ def reduce_dataframe_memory_usage(
                 df[col] = df[col].astype("float64")
 
     end_mem = round(df.memory_usage().sum() / 1024 ** 2, 2)
-    logging.info(f"Memory usage after optimization is {end_mem} MB")
+    logging.info("Memory usage after optimization is %d MB", end_mem)
     if start_mem > 0:
-        logging.info(f"Decreased by {round(100 * (start_mem - end_mem) / start_mem)} %")
+        logging.info(
+            "Decreased by %d %", round(100 * (start_mem - end_mem) / start_mem)
+        )
 
     return df

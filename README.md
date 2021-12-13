@@ -25,7 +25,9 @@ You can see the results here :
 
 -   [Presentation](https://fleuryc.github.io/oc_ingenieur-ia_P6-Ameliorez-le-produit-IA-de-votre-start-up/index.html)
 
--   [HTML page with interactive plots](https://fleuryc.github.io/oc_ingenieur-ia_P6-Ameliorez-le-produit-IA-de-votre-start-up/notebook.html)
+-   HTML page with interactive plots :
+    -   Natural Language Processing (NLP) : [Reviews sentiment analysis Notebook](https://fleuryc.github.io/oc_ingenieur-ia_P6-Ameliorez-le-produit-IA-de-votre-start-up/reviews.html)
+    -   Computer Vision (CV) : [Photos classification Notebook](https://fleuryc.github.io/oc_ingenieur-ia_P6-Ameliorez-le-produit-IA-de-votre-start-up/photos.html)
 
 ## Installation
 

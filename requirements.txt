@@ -27,7 +27,7 @@ entrypoints==0.3
 filelock==3.4.0
 flake8==4.0.1
 flatbuffers==2.0
-fonttools==4.28.3
+fonttools==4.28.5
 funcy==1.16
 future==0.18.2
 gast==0.4.0
